@@ -1,0 +1,15 @@
+ef login_view(request):
+    if request.method == 'GET':
+        cache.set('next', request.GET.get('next', None))
+
+    if request.method == 'POST':
+        # do your checks here
+
+        login(request, user)
+
+        next_url = cache.get('next')
+        if next_url:
+            cache.delete('next')
+            return HttpResponseRedirect(next_url)
+
+    return render(request, 'account/login.html')
